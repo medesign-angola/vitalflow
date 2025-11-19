@@ -1,11 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { DialogComponent } from "@shared/components/dialog.component";
-import { ScrollerComponent } from "@shared/components/scroller.component";
 import { GalleryScrollerComponent } from "@shared/components/gallery.component";
 
 @Component({
   selector: 'app-gallery',
-  imports: [DialogComponent, ScrollerComponent, GalleryScrollerComponent],
+  imports: [DialogComponent, GalleryScrollerComponent],
   template: `
     <section class="gallery">
       <div class="limited-container flex flex-col gap-20">
@@ -89,8 +88,8 @@ import { GalleryScrollerComponent } from "@shared/components/gallery.component";
 
     <ducki-dialog [openTrigger]="this.openVideo()" [top]="50" [translate]="'translateY(-50%) !important'" (closed)="this.openVideo.set(false)" [panelColor]="'transparent'" [closeOnOutsideClick]="true">
       <ng-template #panel let-close="close">
-        <div class="dialog-panel w-89.5 lg:w-272 h-80">
-          <video src="{{ video() }}" controls autoplay loop class="h-full rounded-2xl overflow-hidden"></video>
+        <div class="dialog-panel w-89.5 lg:w-272 h-80 lg:h-[calc(100vh-100px)]">
+          <video src="{{ video() }}" controls autoplay loop class="w-full h-full object-fill rounded-2xl overflow-hidden"></video>
         </div>
       </ng-template>
 

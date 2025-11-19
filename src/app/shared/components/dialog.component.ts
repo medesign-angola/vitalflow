@@ -24,7 +24,7 @@ import { BodyHeightLimiterDirective } from '@shared/directives/body-height-limit
         'zoom-out': (!this.visible() && !this.firstTime()),
         'zoom-in': this.visible
       }"
-      class="q-panel fixed rounded-2x z-111 left-[50%] top-[5%] fle justify-center items-center -translate-x-[50%]"
+      class="q-panel fixed rounded-2x z-111 left-[50%] top-[5%] flex justify-center items-center -translate-x-[50%]"
       [style.top.%]="top()"
       [style.transform]="translate()"
       [style.backgroundColor]="this.panelColor()"

@@ -1,11 +1,10 @@
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { Scroller } from '@core/abstracts/scroller.abstract.class';
-import { NgClass } from '@angular/common';
 import { MiniGalleryControllersComponent } from "./mini-gallery-controllers.component";
 
 @Component({
   selector: 'app-gallery-scroller',
-  imports: [NgClass, MiniGalleryControllersComponent],
+  imports: [MiniGalleryControllersComponent],
   template: `
     <div class="scroller">
 
