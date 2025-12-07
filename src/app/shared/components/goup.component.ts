@@ -5,8 +5,8 @@ import { AfterViewInit, Component, ElementRef, HostListener, inject, input, link
   selector: 'app-goup',
   imports: [],
   template: `
-    <div class="goup fixed hidden lg:block z-50 lg:bottom-44"
-    [style.right.px]="position()"
+    <div class="goup absolute hidden lg:block z-50 lg:bottom-20"
+    [style.right.px]="0"
     >
       @if(!isAtTop()){
         <button (click)="goup()" class="cursor-pointer">

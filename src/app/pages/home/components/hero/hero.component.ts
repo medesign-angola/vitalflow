@@ -58,8 +58,8 @@ import { ScrollerComponent } from "@shared/components/scroller.component";
                   <div class="hashtag">
                     <p class="text-white/70 font-medium text-base leading-[-1.5%]">#{{ item.hashtag }}</p>
                   </div>
-                  <div class="link lg:hidden">
-                    <button class="text-(--secondary) flex gap-2 justify-center items-center font-bold leading-[-1.5%]! text-base">
+                  <div class="link lg:hidde">
+                    <a href="{{ item.pdf }}" target="_blank" class="text-(--secondary) flex gap-2 justify-center lg:justify-start items-center font-bold leading-[-1.5%]! text-base">
                       Visualizar
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clip-path="url(#clip0_104_156)">
@@ -72,7 +72,7 @@ import { ScrollerComponent } from "@shared/components/scroller.component";
                       </clipPath>
                       </defs>
                       </svg>
-                    </button>
+                    </a>
                   </div>
                 </div>
               </ng-template>
@@ -101,27 +101,32 @@ export class HeroComponent implements AfterViewInit {
     {
       image: '/images/eco-sapo.png',
       hashtag: 'Eco Sapo',
-      slug: 'eco-sapo'
+      slug: 'eco-sapo',
+      pdf: '/pdfs/25-02-27 eco.sapo.pt-Empresas da Feira entram em projeto de 80 milhes em Angola para criar complexo industrial de sade  E-fpscreenshot.pdf'
     },
     {
       image: '/images/lusa.jpg',
       hashtag: 'Lusa',
-      slug: 'lusa'
+      slug: 'lusa',
+      pdf: '/pdfs/25-02-27 lusa.pt-wwwlusapt-fpscreenshot.pdf'
     },
     {
       image: '/images/forbes.jpg',
       hashtag: 'Forbes Africa Lusófona',
-      slug: 'forbes'
+      slug: 'forbes',
+      pdf: '/pdfs/25-02-28 Forbes VitalFlow constrói primeiro Complexo Farmacêutico de Angola avaliado em 80 milhões de euros.pdf'
     },
     {
       image: '/images/ver-angola.jpg',
       hashtag: 'Ver Angola',
-      slug: 'ver-angola'
+      slug: 'ver-angola',
+      pdf: '/pdfs/25-02-28 verangola.net-Portuguese bet takes first hospital serum factory to Angola in investment of 80 million - Ver Angola-fpscreenshot.pdf'
     },
     {
       image: '/images/platineline.jpg',
       hashtag: 'PlatinaLine',
-      slug: 'platinaline'
+      slug: 'platinaline',
+      pdf: '/pdfs/25-03-01 platinaline.com-Vitalflow inicia construo do primeiro complexo industrial farmacutico de solues intravenosas e gases-fpscreenshot (1).pdf'
     },
   ]);
 
@@ -130,7 +135,7 @@ export class HeroComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
+    this.paddingX.set(this.limitedContainerRef()?.nativeElement.offsetLeft);
   }
 
   @HostListener('window:resize', ['$event']) onResize(event: Event) {

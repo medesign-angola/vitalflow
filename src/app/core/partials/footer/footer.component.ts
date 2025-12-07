@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, linkedSignal, signal, viewChild } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, inject, linkedSignal, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { RouterLinkActive, RouterLink } from "@angular/router";
 import { GoupComponent } from "@shared/components/goup.component";
 
@@ -19,34 +20,46 @@ import { GoupComponent } from "@shared/components/goup.component";
                 <div class="contact hidden lg:flex flex-col gap-1">
                   <h3 class="text-2xl text-white font-bold mb-1">Contacto</h3>
                   <div class="chips flex gap-2 justify-start items-center">
-                    <span class="py-2 px-4 rounded-full bg-white text-(--primary) font-bold flex gap-2 justify-center items-center">
+                    <button (click)="copyContact()" class="py-2 cursor-pointer px-4 rounded-full bg-white text-(--primary) font-bold flex gap-2 justify-center items-center">
                       {{ phone() }}
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clip-path="url(#clip0_166_27)">
-                      <path d="M10.5 10.5H13.5V2.5H5.5V5.5" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M10.5 5.5H2.5V13.5H10.5V5.5Z" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </g>
-                      <defs>
-                      <clipPath id="clip0_166_27">
-                      <rect width="16" height="16" fill="white"/>
-                      </clipPath>
-                      </defs>
-                      </svg>
-                    </span>
-                    <span class="py-2 px-4 rounded-full bg-white text-(--primary) font-bold flex gap-2 justify-center items-center">
+                      @if(copiedContact()){
+                        <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M16 1.51673L4.88597 13L0 7.95171L1.46795 6.43491L4.88597 9.96656L14.532 0L16 1.51673Z" fill="#274374"/>
+                        </svg>
+                      } @else {
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_166_27)">
+                        <path d="M10.5 10.5H13.5V2.5H5.5V5.5" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 5.5H2.5V13.5H10.5V5.5Z" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_166_27">
+                        <rect width="16" height="16" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                      }
+                    </button>
+                    <button (click)="copyEmail()" class="py-2 cursor-pointer px-4 rounded-full bg-white text-(--primary) font-bold flex gap-2 justify-center items-center">
                       {{ email() }}
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clip-path="url(#clip0_166_27)">
-                      <path d="M10.5 10.5H13.5V2.5H5.5V5.5" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M10.5 5.5H2.5V13.5H10.5V5.5Z" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </g>
-                      <defs>
-                      <clipPath id="clip0_166_27">
-                      <rect width="16" height="16" fill="white"/>
-                      </clipPath>
-                      </defs>
-                      </svg>
-                    </span>
+                      @if(copiedEmail()){
+                        <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M16 1.51673L4.88597 13L0 7.95171L1.46795 6.43491L4.88597 9.96656L14.532 0L16 1.51673Z" fill="#274374"/>
+                        </svg>
+                      } @else {
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_166_27)">
+                        <path d="M10.5 10.5H13.5V2.5H5.5V5.5" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 5.5H2.5V13.5H10.5V5.5Z" stroke="#274374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_166_27">
+                        <rect width="16" height="16" fill="white"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                      }
+                    </button>
                   </div>
                 </div>
               </div>
@@ -90,8 +103,10 @@ import { GoupComponent } from "@shared/components/goup.component";
                 </a>
               </div>
             </div>
-            <div class="bottom-section flex flex-col gap-12">
+            <div class="bottom-section flex flex-col gap-12 relative">
               <img src="/static/footer.svg" alt="">
+              
+              <app-goup [limitedContainerElementRef]="limitedContainer" [increment]="0"></app-goup>
 
               <div class="rights pt-8 flex justify-between flex-wrap gap-4 relative w-full before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-px before:bg-white/20 before:rounded-full">
                 <p class="text-base text-white">&copy; 2025 Vitalflow. Todos os direitos reservados.</p>
@@ -106,7 +121,6 @@ import { GoupComponent } from "@shared/components/goup.component";
         </div>
       </div>
 
-      <app-goup [limitedContainerElementRef]="limitedContainer" [increment]="48"></app-goup>
     </section>
   `,
   styles: `
@@ -117,11 +131,43 @@ import { GoupComponent } from "@shared/components/goup.component";
 })
 export class FooterComponent implements AfterViewInit {
 
+  platformId = inject(PLATFORM_ID);
   limitedContainerRef = viewChild<ElementRef<HTMLElement>>('limitedContainerRef');
   position = linkedSignal(() => this.limitedContainerRef()?.nativeElement.offsetLeft);
+  
+  copiedEmail = signal(false);
+  copiedContact = signal(false);
 
   ngAfterViewInit(): void {
     
+  }
+
+  copyEmail(): void{
+    if(!isPlatformBrowser(this.platformId)) return;
+    if(this.copiedEmail()) return;
+    
+    navigator.clipboard.writeText(this.email());
+    this.copiedEmail.set(true);
+
+    this.enableCopyAfterSeconds();
+  }
+
+  copyContact(): void{
+    if(!isPlatformBrowser(this.platformId)) return;
+    if(this.copiedContact()) return;
+    
+    navigator.clipboard.writeText(this.email());
+    this.copiedContact.set(true);
+
+    this.enableCopyAfterSeconds();
+  }
+
+  enableCopyAfterSeconds(seconds: number = 5): void{
+    const timeOut = setTimeout(() => {
+      this.copiedEmail.set(false);
+      this.copiedContact.set(false);
+      clearTimeout(timeOut);
+    }, seconds * 1000)
   }
   
   get limitedContainer(): ElementRef<HTMLElement> | undefined {
